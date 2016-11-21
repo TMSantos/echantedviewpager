@@ -1,6 +1,10 @@
 # echantedviewpager
 EchantedViewPager is a custom ViewPager that will you give some custom functionalities, such as, scalling scroll, alpha scroll and swipe to dismiss scroll.
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/Ca7G2DqXSsc/0.jpg)](http://www.youtube.com/watch?v=Ca7G2DqXSsc "Echanted view pager")
+
+***
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Ca7G2DqXSsc
+" target="_blank"><img src="http://img.youtube.com/vi/Ca7G2DqXSsc/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 #Scale scroll
 ```
