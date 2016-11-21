@@ -16,13 +16,10 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout mAlphaWrapper;
     LinearLayout mScaleWrapper;
     LinearLayout mSwipeWrapper;
-    LinearLayout mCarrousellWrapper;
 
     SwitchCompat mUseAlpha;
     SwitchCompat mUseScale;
     SwitchCompat mUseSwipeToDismiss;
-    SwitchCompat mUseCarrousell;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +28,18 @@ public class MainActivity extends AppCompatActivity {
         createSwitches();
 
         final EnchantedViewPager mViewPager = (EnchantedViewPager) findViewById(R.id.homepage_card_view_pager);
+
         final EnchantedPagerAdapter adapter = new EnchantedPagerAdapter(this,createAlbumList());
         mViewPager.setAdapter(adapter);
+
+        mUseAlpha.setChecked(true);
+        mUseScale.setChecked(true);
 
         mUseAlpha.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if(checked){
-                    mViewPager.addConfiguration(EnchantedViewPager.CONFIG_ALPHA_SCROLL);
-                    mViewPager.init();
+                    mViewPager.useAlpha();
                     adapter.notifyDataSetChanged();
                 }else{
                     mViewPager.removeAlpha();
@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if(checked){
-                    mViewPager.addConfiguration(EnchantedViewPager.CONFIG_SCALE_SCROLL);
-                    mViewPager.init();
+                    mViewPager.useScale();
                     adapter.notifyDataSetChanged();
 
                 }else{
@@ -85,12 +84,10 @@ public class MainActivity extends AppCompatActivity {
         mScaleWrapper = (LinearLayout) findViewById(R.id.scale_switch_wrapper);
         mAlphaWrapper = (LinearLayout) findViewById(R.id.alpha_switch_wrapper);
         mSwipeWrapper = (LinearLayout) findViewById(R.id.swipe_to_dismiss_switch_wrapper);
-        mCarrousellWrapper = (LinearLayout) findViewById(R.id.carousell_switch_wrapper);
 
         ((TextView) mScaleWrapper.findViewById(R.id.switch_text)).setText("Use scale");
         ((TextView) mAlphaWrapper.findViewById(R.id.switch_text)).setText("Use alpha");
         ((TextView) mSwipeWrapper.findViewById(R.id.switch_text)).setText("Use swipe");
-        ((TextView) mCarrousellWrapper.findViewById(R.id.switch_text)).setText("Use carrousell");
 
         mUseAlpha = (SwitchCompat) mAlphaWrapper.findViewById(R.id.switch_view);
         mUseScale = (SwitchCompat) mScaleWrapper.findViewById(R.id.switch_view);

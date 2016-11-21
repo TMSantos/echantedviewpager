@@ -5,10 +5,9 @@ import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-import java.util.ArrayList;
 
 /**
  * Created by tiago on 8/15/16.
@@ -17,13 +16,7 @@ public class EnchantedViewPager extends ViewPager {
 
     public static final String ENCHANTED_VIEWPAGER_POSITION = "ENCHANTED_VIEWPAGER_POSITION";
 
-    //Echanted viewpager configurations values
-    public static final int CONFIG_SCALE_SCROLL = 0;
-    public static final int CONFIG_ALPHA_SCROLL = 1;
-
     private float mSwipeThreshold; //to avoid single touchs
-
-    private ArrayList<Integer> mConfigurationList;
 
     private boolean mUseAlpha;
     private boolean mUseScale;
@@ -32,33 +25,28 @@ public class EnchantedViewPager extends ViewPager {
     //variables to help swipe movements interpretation
     private float lastYactionDown = 0;
 
+    private float originalDragXposition;
+    private float originalDragYposition;
+
+    private boolean dragStarted;
+
     private EnchantedViewPagerSwipeListener swipeListener;
 
     public EnchantedViewPager(Context context) {
         super(context);
 
-        mConfigurationList = new ArrayList<>();
+        init();
     }
 
     public EnchantedViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mConfigurationList = new ArrayList<>();
+        init();
     }
 
-    public void init() {
-        for (Integer configuration : mConfigurationList) {
-            switch (configuration) {
-                case CONFIG_SCALE_SCROLL:
-                    initScaleScrollConfig();
-                    break;
-                case CONFIG_ALPHA_SCROLL:
-                    initAlphaConfig();
-                    break;
-                default:
-                    break;
-            }
-        }
+    private void init() {
+        useAlpha();
+        useScale();
 
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
@@ -67,7 +55,6 @@ public class EnchantedViewPager extends ViewPager {
                     View curPage = findViewWithTag(ENCHANTED_VIEWPAGER_POSITION + position);
 
                     if (curPage != null) {
-                        mSwipeThreshold = (curPage.getHeight() / 2.5f);
                         if (mUseScale) {
                             curPage.setScaleY(EnchantedPagerConstants.BIG_SCALE - (EnchantedPagerConstants.DIFF_SCALE * positionOffset));
                             curPage.setScaleX(EnchantedPagerConstants.BIG_SCALE - (EnchantedPagerConstants.DIFF_SCALE * positionOffset));
@@ -136,23 +123,34 @@ public class EnchantedViewPager extends ViewPager {
 
         int action = MotionEventCompat.getActionMasked(event);
 
+        final int position = getCurrentItem();
+        final View currPage = findViewWithTag(ENCHANTED_VIEWPAGER_POSITION + position);
+        mSwipeThreshold = (currPage.getHeight() / 4);
+
         switch (action) {
             case (MotionEvent.ACTION_DOWN):
+                originalDragXposition = currPage.getX();
+                originalDragYposition = currPage.getY();
                 lastYactionDown = event.getY();
-                return true;
+                return super.onTouchEvent(event);
+            case (MotionEvent.ACTION_MOVE):
+                if(!dragStarted && checkSwipe(event.getY())){
+                    dragStarted = true;
+                }
+
+                if(dragStarted){
+                    onDrag(event.getY(),currPage);
+                    return true;
+                }else {
+                    return super.onTouchEvent(event);
+                }
             case (MotionEvent.ACTION_UP):
-                if (lastYactionDown < event.getY()) { //swipe down
-                    //check if the user swiped long enough
-                    if ((event.getY() - lastYactionDown) > mSwipeThreshold) {
-                        onSwipe(SWIPE_DIRECTION.SWIPE_DOWN);
-                    }
+                dragStarted = false;
+                boolean dismissed = checkDismiss(event.getY(),currPage);
 
-                } else { // swipe up
-                    //check if the user swiped long enough
-                    if ((lastYactionDown - event.getY()) > mSwipeThreshold) {
-                        onSwipe(SWIPE_DIRECTION.SWIPE_UP);
-                    }
-
+                if(!dismissed){
+                    currPage.setX(originalDragXposition);
+                    currPage.setY(originalDragYposition);
                 }
                 return super.onTouchEvent(event);
             default:
@@ -160,21 +158,61 @@ public class EnchantedViewPager extends ViewPager {
         }
     }
 
-    private void onSwipe(SWIPE_DIRECTION direction) {
-        final int position = getCurrentItem();
-        final View currPage = findViewWithTag(ENCHANTED_VIEWPAGER_POSITION + position);
+    private boolean checkDismiss(float y,View view) {
+        float viewDismissThreshold = view.getHeight() /2;
+        if(originalDragYposition < y){
+            if((y - lastYactionDown) > viewDismissThreshold){
+                onSwipe(SWIPE_DIRECTION.SWIPE_DOWN,view);
+                return true;
+            }
+        }else{
+            if((lastYactionDown - y) > viewDismissThreshold){
+                onSwipe(SWIPE_DIRECTION.SWIPE_UP,view);
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
+    private boolean checkSwipe(float eventY){
+        Log.d("tiagoTest","lastYactionDown = " + lastYactionDown);
+        Log.d("tiagoTest","eventY = " + eventY);
+        if (lastYactionDown < eventY) { //swipe down
+            //check if the user swiped long enough
+            if ((eventY - lastYactionDown) > mSwipeThreshold) {
+                return true;
+            }
+
+        } else { // swipe up
+            //check if the user swiped long enough
+            if ((lastYactionDown - eventY) > mSwipeThreshold) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void onDrag(float y,View view) {
+        view.setX(originalDragXposition);
+        view.setY(y - (view.getHeight() / 2));
+    }
+
+    private void onSwipe(SWIPE_DIRECTION direction,View view) {
         float translationValue = 0;
 
         switch (direction) {
             case SWIPE_UP:
-                translationValue = -currPage.getHeight();
+                translationValue = -view.getHeight();
                 break;
             case SWIPE_DOWN:
-                translationValue = currPage.getHeight();
+                translationValue = view.getHeight();
                 break;
         }
 
-        currPage.animate()
+        view.animate()
                 .translationY(translationValue)
                 .alpha(0.0f).setListener(new Animator.AnimatorListener() {
             @Override
@@ -184,7 +222,7 @@ public class EnchantedViewPager extends ViewPager {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                swipeListener.onSwipeFinished(position);
+                swipeListener.onSwipeFinished(getCurrentItem());
             }
 
             @Override
@@ -199,16 +237,12 @@ public class EnchantedViewPager extends ViewPager {
         });
     }
 
-    public void addConfiguration(int configuration) {
-        mConfigurationList.add(configuration);
-    }
-
     public void addSwipeToDismiss(EnchantedViewPagerSwipeListener listener) {
         this.swipeListener = listener;
         mUseSwipe = true;
     }
 
-    private void initScaleScrollConfig() {
+    public void useScale() {
         int padding_in_px = getResources().getDimensionPixelSize(R.dimen.enchanted_view_pager_margin);
         setPadding(padding_in_px, 0, padding_in_px, 0);
         setClipToPadding(false);
@@ -216,7 +250,7 @@ public class EnchantedViewPager extends ViewPager {
 
     }
 
-    private void initAlphaConfig() {
+    public void useAlpha() {
         mUseAlpha = true;
     }
 
@@ -230,6 +264,7 @@ public class EnchantedViewPager extends ViewPager {
 
     public void removeScale() {
         mUseScale = false;
+        setPadding(0, 0, 0, 0);
     }
 
     public interface EnchantedViewPagerSwipeListener {
