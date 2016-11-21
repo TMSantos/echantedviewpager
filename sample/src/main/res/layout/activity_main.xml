@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ts.echantedviewpager.sample.MainActivity">
+
+
+    <include
+        android:id="@+id/scale_switch_wrapper"
+        layout="@layout/switch_label_layout" />
+
+    <include
+        android:id="@+id/alpha_switch_wrapper"
+        layout="@layout/switch_label_layout" />
+
+    <include
+        android:id="@+id/swipe_to_dismiss_switch_wrapper"
+        layout="@layout/switch_label_layout" />
+
+    <include
+        android:id="@+id/carousell_switch_wrapper"
+        layout="@layout/switch_label_layout" />
+
+    <com.tiagosantos.enchantedviewpager.EnchantedViewPager
+        android:id="@+id/homepage_card_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
