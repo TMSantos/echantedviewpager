@@ -125,6 +125,10 @@ public class EnchantedViewPager extends ViewPager {
 
         final int position = getCurrentItem();
         final View currPage = findViewWithTag(ENCHANTED_VIEWPAGER_POSITION + position);
+        if(currPage == null){
+            return super.onTouchEvent(event);
+        }
+        
         mSwipeThreshold = (currPage.getHeight() / 4);
 
         switch (action) {
