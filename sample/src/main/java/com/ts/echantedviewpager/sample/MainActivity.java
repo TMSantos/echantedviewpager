@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     SwitchCompat mUseAlpha;
     SwitchCompat mUseScale;
     SwitchCompat mUseSwipeToDismiss;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
