@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     SwitchCompat mUseAlpha;
     SwitchCompat mUseScale;
     SwitchCompat mUseSwipeToDismiss;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         final EnchantedViewPager mViewPager = (EnchantedViewPager) findViewById(R.id.homepage_card_view_pager);
 
-        final EnchantedPagerAdapter adapter = new EnchantedPagerAdapter(this,createAlbumList());
+        final EnchantedPagerAdapter adapter = new EnchantedPagerAdapter(this, createAlbumList());
         mViewPager.setAdapter(adapter);
 
         mUseAlpha.setChecked(true);
@@ -38,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
         mUseAlpha.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if(checked){
+                if (checked) {
                     mViewPager.useAlpha();
                     adapter.notifyDataSetChanged();
-                }else{
+                } else {
                     mViewPager.removeAlpha();
                     adapter.notifyDataSetChanged();
                 }
@@ -51,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
         mUseScale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if(checked){
+                if (checked) {
                     mViewPager.useScale();
                     adapter.notifyDataSetChanged();
 
-                }else{
+                } else {
                     mViewPager.removeScale();
                     adapter.notifyDataSetChanged();
                 }
@@ -65,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
         mUseSwipeToDismiss.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if(checked){
+                if (checked) {
                     mViewPager.addSwipeToDismiss(new EnchantedViewPager.EnchantedViewPagerSwipeListener() {
                         @Override
                         public void onSwipeFinished(int position) {
                             adapter.removePosition(position);
                         }
                     });
-                }else{
+                } else {
                     mViewPager.addSwipeToDismiss(null);
                     mViewPager.removeSwipe();
                 }
@@ -97,32 +98,32 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<AlbumArt> createAlbumList() {
         ArrayList<AlbumArt> albumList = new ArrayList<>();
 
-        for(int i = 0; i < 10 ; i ++){
+        for (int i = 0; i < 10; i++) {
             albumList.add(new AlbumArt(getAlbumArtReference(i)));
         }
         return albumList;
     }
 
     private int getAlbumArtReference(int position) {
-        if(position == 0){
+        if (position == 0) {
             return R.drawable.album_art_1;
-        }else if(position == 1){
+        } else if (position == 1) {
             return R.drawable.album_art_2;
-        }else if(position == 2){
+        } else if (position == 2) {
             return R.drawable.album_art_3;
-        }else if(position == 3){
+        } else if (position == 3) {
             return R.drawable.album_art_4;
-        }else if(position == 4){
+        } else if (position == 4) {
             return R.drawable.album_art_5;
-        }else if(position == 5){
+        } else if (position == 5) {
             return R.drawable.album_art_6;
-        }else if(position == 6){
+        } else if (position == 6) {
             return R.drawable.album_art_7;
-        }else if(position == 7){
+        } else if (position == 7) {
             return R.drawable.album_art_8;
-        }else if(position == 8){
+        } else if (position == 8) {
             return R.drawable.album_art_9;
-        }else if(position == 9){
+        } else if (position == 9) {
             return R.drawable.album_art_10;
         }
 
