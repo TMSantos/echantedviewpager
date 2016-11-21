@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -128,7 +127,7 @@ public class EnchantedViewPager extends ViewPager {
         if(currPage == null){
             return super.onTouchEvent(event);
         }
-        
+
         mSwipeThreshold = (currPage.getHeight() / 4);
 
         switch (action) {
@@ -181,8 +180,6 @@ public class EnchantedViewPager extends ViewPager {
     }
 
     private boolean checkSwipe(float eventY){
-        Log.d("tiagoTest","lastYactionDown = " + lastYactionDown);
-        Log.d("tiagoTest","eventY = " + eventY);
         if (lastYactionDown < eventY) { //swipe down
             //check if the user swiped long enough
             if ((eventY - lastYactionDown) > mSwipeThreshold) {
