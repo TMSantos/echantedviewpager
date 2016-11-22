@@ -1,4 +1,29 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'enchantedviewpager'
+
+    publishedGroupId = 'com.tiagosantos'
+    libraryName = 'EnchantedViewPager'
+    artifact = 'enchantedviewpager'
+
+    libraryDescription = 'EchantedViewPager is an android library with special and custom features for normal ViewPager.'
+
+    siteUrl = 'https://github.com/TMSantos/echantedviewpager'
+    gitUrl = 'https://github.com/TMSantos/echantedviewpager.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'tiagosantos'
+    developerName = 'Tiago Santos'
+    developerEmail = 'tiagomsantos89@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
 
 android {
     compileSdkVersion 24
@@ -22,10 +47,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     compile 'com.android.support:appcompat-v7:24.0.0'
-    testCompile 'junit:junit:4.12'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
+

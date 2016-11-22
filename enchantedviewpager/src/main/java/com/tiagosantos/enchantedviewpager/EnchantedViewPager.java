@@ -124,7 +124,7 @@ public class EnchantedViewPager extends ViewPager {
 
         final int position = getCurrentItem();
         final View currPage = findViewWithTag(ENCHANTED_VIEWPAGER_POSITION + position);
-        if(currPage == null){
+        if (currPage == null) {
             return super.onTouchEvent(event);
         }
 
@@ -137,21 +137,21 @@ public class EnchantedViewPager extends ViewPager {
                 lastYactionDown = event.getY();
                 return super.onTouchEvent(event);
             case (MotionEvent.ACTION_MOVE):
-                if(!dragStarted && checkSwipe(event.getY())){
+                if (!dragStarted && checkSwipe(event.getY())) {
                     dragStarted = true;
                 }
 
-                if(dragStarted){
-                    onDrag(event.getY(),currPage);
+                if (dragStarted) {
+                    onDrag(event.getY(), currPage);
                     return true;
-                }else {
+                } else {
                     return super.onTouchEvent(event);
                 }
             case (MotionEvent.ACTION_UP):
                 dragStarted = false;
-                boolean dismissed = checkDismiss(event.getY(),currPage);
+                boolean dismissed = checkDismiss(event.getY(), currPage);
 
-                if(!dismissed){
+                if (!dismissed) {
                     currPage.setX(originalDragXposition);
                     currPage.setY(originalDragYposition);
                 }
@@ -161,16 +161,16 @@ public class EnchantedViewPager extends ViewPager {
         }
     }
 
-    private boolean checkDismiss(float y,View view) {
-        float viewDismissThreshold = view.getHeight() /2;
-        if(originalDragYposition < y){
-            if((y - lastYactionDown) > viewDismissThreshold){
-                onSwipe(SWIPE_DIRECTION.SWIPE_DOWN,view);
+    private boolean checkDismiss(float y, View view) {
+        float viewDismissThreshold = view.getHeight() / 2;
+        if (originalDragYposition < y) {
+            if ((y - lastYactionDown) > viewDismissThreshold) {
+                onSwipe(SWIPE_DIRECTION.SWIPE_DOWN, view);
                 return true;
             }
-        }else{
-            if((lastYactionDown - y) > viewDismissThreshold){
-                onSwipe(SWIPE_DIRECTION.SWIPE_UP,view);
+        } else {
+            if ((lastYactionDown - y) > viewDismissThreshold) {
+                onSwipe(SWIPE_DIRECTION.SWIPE_UP, view);
                 return true;
             }
         }
@@ -179,7 +179,7 @@ public class EnchantedViewPager extends ViewPager {
         return false;
     }
 
-    private boolean checkSwipe(float eventY){
+    private boolean checkSwipe(float eventY) {
         if (lastYactionDown < eventY) { //swipe down
             //check if the user swiped long enough
             if ((eventY - lastYactionDown) > mSwipeThreshold) {
@@ -196,12 +196,12 @@ public class EnchantedViewPager extends ViewPager {
         return false;
     }
 
-    private void onDrag(float y,View view) {
+    private void onDrag(float y, View view) {
         view.setX(originalDragXposition);
         view.setY(y - (view.getHeight() / 2));
     }
 
-    private void onSwipe(SWIPE_DIRECTION direction,View view) {
+    private void onSwipe(SWIPE_DIRECTION direction, View view) {
         float translationValue = 0;
 
         switch (direction) {
