@@ -7,7 +7,8 @@ EchantedViewPager is a custom ViewPager that provides some custom and usefull fu
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 #Usage
-```Inside your pager adapter you must do this whenever you instantiate a view:
+Inside your pager adapter you must do this whenever you instantiate a view:
+```
 @Override
     public Object instantiateItem(ViewGroup container, int position) {
         (...)
@@ -52,4 +53,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-``
+```
