@@ -11,7 +11,6 @@ bintray {
     pkg {
         repo = 'maven'
         name = 'com.tiagosantos.echantedviewpager'
-        userOrg = 'tiagosantos'
 
         version {
             name = '1.0.0'
