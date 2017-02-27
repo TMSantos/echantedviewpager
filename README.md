@@ -1,10 +1,7 @@
 # echantedviewpager
 EchantedViewPager is a custom ViewPager that provides some custom and usefull functionalities, such as, scalling scroll, alpha scroll and swipe to dismiss option.
 
-#Video
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=Ca7G2DqXSsc
-" target="_blank"><img src="http://img.youtube.com/vi/Ca7G2DqXSsc/0.jpg" 
-alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+![sslv animation](http://i.giphy.com/xTiN0LeaVlYgRdz5o4.gif)
 
 #Usage
 Inside your pager adapter you must do this whenever you instantiate a view:
