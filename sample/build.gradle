@@ -5,13 +5,12 @@ android {
     buildToolsVersion "24.0.3"
 
     defaultConfig {
-        applicationId "com.ts.echantedviewpager.sample"
+        applicationId "com.tiagosantos.echantedviewpager.sample"
         minSdkVersion 14
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {

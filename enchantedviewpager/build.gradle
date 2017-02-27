@@ -1,28 +1,63 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
 
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'enchantedviewpager'
+group='com.tiagosantos'
+version = '1.0.0'
 
-    publishedGroupId = 'com.tiagosantos'
-    libraryName = 'EnchantedViewPager'
-    artifact = 'enchantedviewpager'
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'EchantedViewPager'
+            description 'A custom ViewPager that provides some custom and usefull functionalities, such as, scalling scroll, scrolling with alpha values and swipe to dismiss option.'
+            url 'https://github.com/googlesamples/easygoogle'
+            inceptionYear '2015'
 
-    libraryDescription = 'EchantedViewPager is an android library with special and custom features for normal ViewPager.'
+            packaging 'aar'
+            groupId 'com.tiagosantos'
+            artifactId 'echantedviewpager'
+            version '1.0.0'
 
-    siteUrl = 'https://github.com/TMSantos/echantedviewpager'
-    gitUrl = 'https://github.com/TMSantos/echantedviewpager.git'
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection 'https://github.com/TMSantos/echantedviewpager.git'
+                url 'https://github.com/TMSantos/echantedviewpager'
 
-    libraryVersion = '1.0.0'
+            }
+            developers {
+                developer {
+                    name 'Tiago Santos'
+                }
+            }
+        }
+    }
+}
 
-    developerId = 'tiagosantos'
-    developerName = 'Tiago Santos'
-    developerEmail = 'tiagomsantos89@gmail.com'
+bintray {
+    user = project.property('bintrayUser')
+    key = project.property('bintrayApiKey')
+    pkg {
+        repo = 'maven'
+        name = 'com.tiagosantos.echantedviewpager'
 
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+        version {
+            name = '1.0.0'
+            desc = 'EchantedViewPager is a custom ViewPager that provides some custom and usefull functionalities, such as, scalling scroll, scrolling with alpha values and swipe to dismiss option.'
+            released  = new Date()
+            vcsTag = '1.0.0'
+        }
+
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/TMSantos/echantedviewpager.git'
+        websiteUrl = 'https://github.com/TMSantos/echantedviewpager'
+    }
+    configurations = ['archives']
 }
 
 android {
@@ -50,7 +85,25 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.0.0'
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
 
+task generateJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath()
+            .join(File.pathSeparator))
+}
 
+task generateJavadocsJar(type: Jar) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+
+generateJavadocsJar.dependsOn generateJavadocs
+
+artifacts {
+    archives generateJavadocsJar
+    archives generateSourcesJar
+}
