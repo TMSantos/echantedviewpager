@@ -35,6 +35,10 @@ Inside your pager adapter you must do this whenever you instantiate a view:
                         }
                     });
 ```
+#Gradle
+```
+compile 'com.tiagosantos:enchantedviewpager:1.0.0'
+```
 #License
 ```
 Copyright 2016 Tiago Santos
