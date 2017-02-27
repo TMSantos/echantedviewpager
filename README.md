@@ -5,7 +5,7 @@ EchantedViewPager is a custom ViewPager that provides some custom and usefull fu
 
 #Usage
 Inside your pager adapter you must do this whenever you instantiate a view:
-```
+```java
 @Override
     public Object instantiateItem(ViewGroup container, int position) {
         (...)
@@ -15,18 +15,23 @@ Inside your pager adapter you must do this whenever you instantiate a view:
         return mCurrentView;
     }
 ```
-#Scale scroll
+```xml
+<com.tiagosantos.enchantedviewpager.EnchantedViewPager
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
 ```
+#Scale scroll
+```java
  final EnchantedViewPager mViewPager = (EnchantedViewPager) findViewById(R.id.viewpager);
  mViewPager.useScale();
 ```
 #Alpha scroll
-```
+```java
  final EnchantedViewPager mViewPager = (EnchantedViewPager) findViewById(R.id.viewpager);
  mViewPager.useAlpha();
 ```
 #Swipe to dismiss
-```
+```java
  final EnchantedViewPager mViewPager = (EnchantedViewPager) findViewById(R.id.viewpager);
  mViewPager.addSwipeToDismiss(new EnchantedViewPager.EnchantedViewPagerSwipeListener() {
                         @Override
