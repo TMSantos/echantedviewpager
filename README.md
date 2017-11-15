@@ -3,7 +3,7 @@ EchantedViewPager is a custom ViewPager that provides some custom and usefull fu
 
 ![sslv animation](https://media.giphy.com/media/l2QDZzsKdcP5Rtxgk/giphy.gif)
 
-#Usage
+# Usage
 Inside your pager adapter you must do this whenever you instantiate a view:
 ```java
 @Override
@@ -20,12 +20,12 @@ Inside your pager adapter you must do this whenever you instantiate a view:
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
 ```
-#Scale scroll
+# Scale scroll
 ```java
  final EnchantedViewPager mViewPager = (EnchantedViewPager) findViewById(R.id.viewpager);
  mViewPager.useScale();
 ```
-#Alpha scroll
+# Alpha scroll
 ```java
  final EnchantedViewPager mViewPager = (EnchantedViewPager) findViewById(R.id.viewpager);
  mViewPager.useAlpha();
@@ -41,7 +41,7 @@ Inside your pager adapter you must do this whenever you instantiate a view:
                     });
 ```
 
-#Carrousell / Infinite loop mode
+# Carrousell / Infinite loop mode
 ```java
     First, your pager adapter must extend EchantedPagerAdapter:
 
@@ -60,11 +60,11 @@ Inside your pager adapter you must do this whenever you instantiate a view:
     If you want to have carrousel for both sides, you need to set your viewpager position on the middle:
     mViewPager.setCurrentItem(echantedAdapter.getMiddlePosition());
 ```
-#Gradle
+# Gradle
 ```
 compile 'com.tiagosantos:enchantedviewpager:1.1.0'
 ```
-#License
+# License
 ```
 Copyright 2016 Tiago Santos
 
