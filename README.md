@@ -30,7 +30,7 @@ Inside your pager adapter you must do this whenever you instantiate a view:
  final EnchantedViewPager mViewPager = (EnchantedViewPager) findViewById(R.id.viewpager);
  mViewPager.useAlpha();
 ```
-#Swipe to dismiss
+# Swipe to dismiss
 ```java
  final EnchantedViewPager mViewPager = (EnchantedViewPager) findViewById(R.id.viewpager);
  mViewPager.addSwipeToDismiss(new EnchantedViewPager.EnchantedViewPagerSwipeListener() {
