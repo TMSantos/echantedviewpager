@@ -3,7 +3,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group='com.tiagosantos'
-version = '1.0.0'
+version = '1.1.0'
 
 bintray {
     user = project.property('bintrayUser')
@@ -13,10 +13,10 @@ bintray {
         name = 'com.tiagosantos.echantedviewpager'
 
         version {
-            name = '1.0.0'
+            name = '1.1.0'
             desc = 'EchantedViewPager is a custom ViewPager that provides some custom and usefull functionalities, such as, scalling scroll, scrolling with alpha values and swipe to dismiss option.'
             released  = new Date()
-            vcsTag = '1.0.0'
+            vcsTag = '1.1.0'
         }
 
         licenses = ['Apache-2.0']

@@ -16,10 +16,12 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout mAlphaWrapper;
     LinearLayout mScaleWrapper;
     LinearLayout mSwipeWrapper;
+    LinearLayout mCarrouselWrapper;
 
     SwitchCompat mUseAlpha;
     SwitchCompat mUseScale;
     SwitchCompat mUseSwipeToDismiss;
+    SwitchCompat mUseCarrousel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +72,24 @@ public class MainActivity extends AppCompatActivity {
                     mViewPager.addSwipeToDismiss(new EnchantedViewPager.EnchantedViewPagerSwipeListener() {
                         @Override
                         public void onSwipeFinished(int position) {
-                            adapter.removePosition(position);
+                            adapter.removeItem(position);
                         }
                     });
                 } else {
                     mViewPager.addSwipeToDismiss(null);
                     mViewPager.removeSwipe();
+                }
+            }
+        });
+
+        mUseCarrousel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if(checked){
+                    adapter.enableCarrousel();
+                    mViewPager.setCurrentItem(adapter.getMiddlePosition());
+                }else{
+                    adapter.disableCarrousel();
                 }
             }
         });
@@ -85,14 +99,17 @@ public class MainActivity extends AppCompatActivity {
         mScaleWrapper = (LinearLayout) findViewById(R.id.scale_switch_wrapper);
         mAlphaWrapper = (LinearLayout) findViewById(R.id.alpha_switch_wrapper);
         mSwipeWrapper = (LinearLayout) findViewById(R.id.swipe_to_dismiss_switch_wrapper);
+        mCarrouselWrapper = (LinearLayout) findViewById(R.id.arroussel_switch_wrapper);
 
         ((TextView) mScaleWrapper.findViewById(R.id.switch_text)).setText("Use scale");
         ((TextView) mAlphaWrapper.findViewById(R.id.switch_text)).setText("Use alpha");
         ((TextView) mSwipeWrapper.findViewById(R.id.switch_text)).setText("Use swipe");
+        ((TextView) mCarrouselWrapper.findViewById(R.id.switch_text)).setText("Use carrousell mode");
 
         mUseAlpha = (SwitchCompat) mAlphaWrapper.findViewById(R.id.switch_view);
         mUseScale = (SwitchCompat) mScaleWrapper.findViewById(R.id.switch_view);
         mUseSwipeToDismiss = (SwitchCompat) mSwipeWrapper.findViewById(R.id.switch_view);
+        mUseCarrousel = (SwitchCompat) mCarrouselWrapper.findViewById(R.id.switch_view);
     }
 
     private ArrayList<AlbumArt> createAlbumList() {

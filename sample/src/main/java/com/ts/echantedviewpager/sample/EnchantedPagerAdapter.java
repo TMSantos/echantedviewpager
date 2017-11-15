@@ -3,20 +3,20 @@ package com.ts.echantedviewpager.sample;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
+import com.tiagosantos.enchantedviewpager.EnchantedViewPagerAdapter;
 
 import java.util.ArrayList;
 
 /**
  * Created by tiago on 8/13/16.
  */
-public class EnchantedPagerAdapter extends PagerAdapter{
+public class EnchantedPagerAdapter extends EnchantedViewPagerAdapter{
 
     Context mContext;
 
@@ -25,6 +25,7 @@ public class EnchantedPagerAdapter extends PagerAdapter{
     final ArrayList<AlbumArt> mAlbumlist;
 
     public EnchantedPagerAdapter(Context context,ArrayList<AlbumArt> albumList) {
+        super(albumList);
         mContext = context;
         inflater = LayoutInflater.from(mContext);
         mAlbumlist = albumList;
@@ -32,12 +33,16 @@ public class EnchantedPagerAdapter extends PagerAdapter{
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        if (mAlbumlist.size() == 0) return null;
+
+        int itemPosition = position % mAlbumlist.size();
+
         ImageView mCurrentView = (ImageView) inflater.inflate(R.layout.item_view, container, false);
 
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inScaled = false;
 
-        AlbumArt album = this.mAlbumlist.get(position);
+        AlbumArt album = this.mAlbumlist.get(itemPosition);
         Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), album.getImageResource(), opts);
 
         mCurrentView.setImageBitmap(bitmap);
@@ -45,11 +50,6 @@ public class EnchantedPagerAdapter extends PagerAdapter{
         container.addView(mCurrentView);
 
         return mCurrentView;
-    }
-
-    @Override
-    public int getCount() {
-        return mAlbumlist.size();
     }
 
     @Override
@@ -67,8 +67,5 @@ public class EnchantedPagerAdapter extends PagerAdapter{
         return POSITION_NONE;
     }
 
-    public void removePosition(int position) {
-        mAlbumlist.remove(mAlbumlist.get(position));
-        notifyDataSetChanged();
-    }
+
 }
