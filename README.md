@@ -1,7 +1,7 @@
 # echantedviewpager
 EchantedViewPager is a custom ViewPager that provides some custom and usefull functionalities, such as, scalling scroll, alpha scroll and swipe to dismiss option.
 
-![](https://media.giphy.com/media/l2QDZzsKdcP5Rtxgk/giphy.gif)
+![sslv animation](https://thumbs.gfycat.com/LivelyBigHogget-size_restricted.gif)
 
 # Usage
 Inside your pager adapter you must do this whenever you instantiate a view:
@@ -42,31 +42,38 @@ Inside your pager adapter you must do this whenever you instantiate a view:
 ```
 
 # Carrousell / Infinite loop mode
-```java
-    First, your pager adapter must extend EchantedPagerAdapter:
 
+    First, your pager adapter must extend EchantedPagerAdapter:
+```java
     SomePagerAdapter extends EnchantedViewPagerAdapter
     public SomePagerAdapter(Context context,ArrayList<AlbumArt> albumList) {
         super(albumList);
         (...)
     }
+```
 
     And make sure you don't implement getCount() method, since it must be controlled by EnchantedPagerAdapter.
 
     Then you just need to activate/diasble carrousel mode:
+    
+```java
     echantedAdapter.enableCarrousel();
     echantedAdapter.disableCarrousel();
+```
 
     If you want to have carrousel for both sides, you need to set your viewpager position on the middle:
+    
+```java       
     mViewPager.setCurrentItem(echantedAdapter.getMiddlePosition());
 ```
+
 # Gradle
 ```
 compile 'com.tiagosantos:enchantedviewpager:1.1.0'
 ```
 # License
 ```
-Copyright 2016 Tiago Santos
+Copyright 2017 Tiago Santos
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
