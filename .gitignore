@@ -81,3 +81,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 *.asc
+gradle.properties
+.settings/org.eclipse.buildship.core.prefs
+.project
